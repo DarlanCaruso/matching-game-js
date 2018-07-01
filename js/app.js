@@ -10,21 +10,43 @@ var vetorCartas = [
     { id: 7, icone: "fab fa-linode" },
 ];
 var cartas = vetorCartas.concat(vetorCartas);
+cartas = retornarCartas(cartas);
+
+function renderizarCartas() { 
+    renderizarElementos();
+    var colunas = document.querySelectorAll('.col');
+    for(i = 0; i < cartas.length; i++) {
+        colunas[i].innerHTML = cartas[i].id;
+    };
+};
+
+function renderizarElementos() {
+    for (var i = 0; i < 4; i++) {
+        var container = document.querySelector('#cartas');
+        var row = document.createElement('div');
+        row.classList.add('row');
+        row.id = i;
+        for (var j = 0; j < 4; j++) {
+            var col = document.createElement('div');
+            col.classList.add('col');
+            row.appendChild(col);
+        }
+        container.appendChild(row);
+    };
+};
 
 //Adiciona o contador
-
 function adicionarContador() {
     contador.innerHTML++;
 };
 
 //Reinicia o jogo
-
 function reiniciarJogo() {
     contador.innerHTML = 0;
+    cartas = retornarCartas(cartas);
 };
 
 //Retorna as cartas em posições aleatórias
-
 function retornarCartas(cartas) {
     var index = cartas.length, valorTemporario, indexAleatorio;
 
@@ -39,6 +61,3 @@ function retornarCartas(cartas) {
 
     return cartas;
 };
-
-cartas = retornarCartas(cartas);
-console.log(cartas);
