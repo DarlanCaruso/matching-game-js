@@ -1,4 +1,10 @@
+var contador = document.querySelector('#movimentos');
+
 function adicionarContador() {
-    let contador = document.querySelector('#movimentos').innerHTML++;
+    contador.innerHTML++;
+};
+
+function reiniciarJogo() {
+    contador.innerHTML = 0;
 };
 
