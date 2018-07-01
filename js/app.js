@@ -1,6 +1,9 @@
 //Contador
 var contador = document.querySelector('#movimentos');
 
+//Container
+var container = document.querySelector('#cartas');
+
 //Lista de cartas
 var vetorCartas = [
     { id: 0, icone: "fa-angular" },
@@ -23,12 +26,13 @@ cartas = retornarCartas(cartas);
 function matchingGame(colunas) {
     var cartaEscolhida = [];
     colunas.forEach(coluna => {
-        coluna.addEventListener('click', () => {
+        coluna.querySelector('.front').addEventListener('click', () => {
             var id = coluna.className[11];
             var posicaoColuna = coluna.id;
             cartaEscolhida.push({id: id, posicao: posicaoColuna});
+            adicionarContador();
             if (cartaEscolhida.length > 1) {
-                if (cartaEscolhida[0].id === cartaEscolhida[1].id) {
+                if (cartaEscolhida[0].id === cartaEscolhida[1].id && cartaEscolhida[0].posicao !== cartaEscolhida[1].posicao) {
                     toggleClass(cartaEscolhida, true);
                 } else {
                     toggleClass(cartaEscolhida, false);
@@ -44,14 +48,16 @@ function toggleClass(vetorEscolhido, acerto) {
     if(acerto) {
         document.querySelector(`#${vetorEscolhido[0].posicao.toString()} .flip-container`).classList.add('hover');
         document.querySelector(`#${vetorEscolhido[0].posicao.toString()} .flip-container .back`).classList.add('opcao-correta');
+        document.querySelector(`#${vetorEscolhido[0].posicao.toString()} .flip-container .back`).setAttribute('disabled', 'disabled');
         document.querySelector(`#${vetorEscolhido[0].posicao.toString()}`).removeEventListener('click', () => { });
         document.querySelector(`#${vetorEscolhido[1].posicao.toString()} .flip-container`).classList.add('hover');
         document.querySelector(`#${vetorEscolhido[1].posicao.toString()} .flip-container .back`).classList.add('opcao-correta');
+        document.querySelector(`#${vetorEscolhido[1].posicao.toString()} .flip-container .back`).setAttribute('disabled', 'disabled');
         document.querySelector(`#${vetorEscolhido[1].posicao.toString()}`).removeEventListener('click', () => { });
     } else {
         document.querySelector(`#${vetorEscolhido[0].posicao.toString()} .flip-container`).classList.add('hover');
-        document.querySelector(`#${vetorEscolhido[1].posicao.toString()} .flip-container`).classList.add('hover');
         document.querySelector(`#${vetorEscolhido[0].posicao.toString()} .flip-container .back`).classList.add('opcao-incorreta');
+        document.querySelector(`#${vetorEscolhido[1].posicao.toString()} .flip-container`).classList.add('hover');
         document.querySelector(`#${vetorEscolhido[1].posicao.toString()} .flip-container .back`).classList.add('opcao-incorreta');
         window.setTimeout(() => {
             document.querySelector(`#${vetorEscolhido[0].posicao.toString()} .flip-container`).classList.remove('hover');
@@ -64,37 +70,13 @@ function toggleClass(vetorEscolhido, acerto) {
     }
 }
 
-//Renderiza as cartas no browser
-function renderizarCartas(cartas) { 
-    renderizarElementos();
-    var colunas = document.querySelectorAll('.col');
-    for(i = 0; i < cartas.length; i++) {
-        var flipperContainer = document.createElement('div');
-        flipperContainer.classList.add('flip-container');
-        var flipper = document.createElement('div');
-        flipper.classList.add('flipper');
-        var front = document.createElement('div');
-        front.classList.add('front');
-        var back = document.createElement('div');
-        back.classList.add('back');
-        var icone = document.createElement('i');
-        icone.classList.add('fab');
-        icone.classList.add(`${cartas[i].icone.toString()}`);
-        colunas[i].id =  'col-'+i;
-        colunas[i].classList.add('coluna-' + cartas[i].id);
-        flipper.appendChild(front);
-        flipper.appendChild(back);
-        back.appendChild(icone);
-        flipperContainer.appendChild(flipper);
-        colunas[i].appendChild(flipperContainer);
-    }
-    matchingGame(colunas);
-};
-
 //Cria os elementos do DOM
 function renderizarElementos() {
+    while (container.hasChildNodes()) {
+        container.removeChild(container.firstChild);
+    };
+
     for (var i = 0; i < 4; i++) {
-        var container = document.querySelector('#cartas');
         var row = document.createElement('div');
         row.classList.add('row');
         row.id = 'row-'+i;
@@ -102,9 +84,36 @@ function renderizarElementos() {
             var col = document.createElement('div');
             col.classList.add('col');
             row.appendChild(col);
-        }
+        };
         container.appendChild(row);
     };
+
+    var colunas = document.querySelectorAll('.col');
+
+    for (i = 0; i < cartas.length; i++) {
+        var flipperContainer = document.createElement('div');
+        var flipper = document.createElement('div');
+        var front = document.createElement('button');
+        var back = document.createElement('button');
+        var icone = document.createElement('i');
+
+        flipperContainer.classList.add('flip-container');
+        flipper.classList.add('flipper');
+        front.classList.add('front');
+        back.classList.add('back');
+        icone.classList.add('fab');
+        icone.classList.add(`${cartas[i].icone.toString()}`);
+        colunas[i].classList.add('coluna-' + cartas[i].id);
+        colunas[i].id = 'col-' + i;
+                
+        flipper.appendChild(front);
+        flipper.appendChild(back);
+        back.appendChild(icone);
+        flipperContainer.appendChild(flipper);
+        colunas[i].appendChild(flipperContainer);
+    };
+
+    matchingGame(colunas);
 };
 
 //Adiciona o contador
@@ -116,7 +125,7 @@ function adicionarContador() {
 function reiniciarJogo() {
     contador.innerHTML = 0;
     cartas = retornarCartas(cartas);
-    //renderizarCartas();
+    renderizarElementos();
 };
 
 //Retorna as cartas em posições aleatórias
@@ -135,5 +144,4 @@ function retornarCartas(cartas) {
     return cartas;
 };
 
-reiniciarJogo();
-renderizarCartas(cartas);
+renderizarElementos();
