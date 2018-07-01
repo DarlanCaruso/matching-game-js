@@ -12,9 +12,18 @@
   <title>Matching Game - Darlan Caruso</title>
 </head>
 <body>
-  <p>Movimentos: <span id="movimentos">0</span></p>
-  <button onclick="reiniciarJogo()">Resetar <i class="fas fa-redo-alt"></i></button>
-  <button onclick="adicionarContador()">Incremento</button>
+  <header id="header">
+    <h1>Matching Game</h1>
+    <h6>Jogo da memória</h6>
+    <section class="acoes">
+      <p><strong>Movimentos:</strong>
+        <span id="movimentos">0</span>
+      </p>
+      <button type="button" class="btn btn-outline-info btn-small btn-block" onclick="reiniciarJogo()">Reiniciar
+        <i class="fas fa-redo-alt"></i>
+      </button>
+    </section>
+  </header>
   <section id="cartas" class="container">
     <!-- Criado dinamicamente -->
   </section>

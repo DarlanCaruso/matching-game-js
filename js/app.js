@@ -27,7 +27,7 @@ function matchingGame(colunas) {
     var cartaEscolhida = [];
     colunas.forEach(coluna => {
         coluna.querySelector('.front').addEventListener('click', () => {
-            var id = coluna.className[11];
+            var id = coluna.className[coluna.className.length - 1];
             var posicaoColuna = coluna.id;
             cartaEscolhida.push({id: id, posicao: posicaoColuna});
             adicionarContador();
@@ -82,13 +82,17 @@ function renderizarElementos() {
         row.id = 'row-'+i;
         for (var j = 0; j < 4; j++) {
             var col = document.createElement('div');
-            col.classList.add('col');
+            col.classList.add('col-6');
+            col.classList.add('col-sm-6');
+            col.classList.add('col-md-3');
+            col.classList.add('col-lg-3');
+            col.classList.add('col-xs-3');
             row.appendChild(col);
         };
         container.appendChild(row);
     };
 
-    var colunas = document.querySelectorAll('.col');
+    var colunas = document.querySelectorAll('.col-6');
 
     for (i = 0; i < cartas.length; i++) {
         var flipperContainer = document.createElement('div');
