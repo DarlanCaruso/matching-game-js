@@ -1,5 +1,6 @@
 //Contador
 var contador = document.querySelector('#movimentos');
+var resultado = 0;
 
 //Container
 var container = document.querySelector('#cartas');
@@ -34,6 +35,13 @@ function matchingGame(colunas) {
             if (cartaEscolhida.length > 1) {
                 if (cartaEscolhida[0].id === cartaEscolhida[1].id && cartaEscolhida[0].posicao !== cartaEscolhida[1].posicao) {
                     toggleClass(cartaEscolhida, true);
+                    resultado++;
+                    if(resultado === 1) {
+                        window.scrollTo(0,0);
+                        document.querySelector('body').setAttribute('style', 'overflow-y: hidden');
+                        document.querySelector('#resultado').setAttribute('style', 'display: block');
+                        document.querySelector('#movimentos-resultado').innerHTML = contador.innerHTML;
+                    }
                 } else {
                     toggleClass(cartaEscolhida, false);
                 };
@@ -130,6 +138,8 @@ function reiniciarJogo() {
     contador.innerHTML = 0;
     cartas = retornarCartas(cartas);
     renderizarElementos();
+    document.querySelector('body').setAttribute('style', 'overflow-y: scroll');
+    document.querySelector('#resultado').setAttribute('style', 'display: none');
 };
 
 //Retorna as cartas em posições aleatórias
