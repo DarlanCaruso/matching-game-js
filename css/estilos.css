@@ -11,8 +11,9 @@ body {
 /* Cabeçalho */
 
 #header {
+  width: 90%;
   text-align: center;
-  margin-top: 5%;
+  margin: 5% auto 0;
 }
 
 #header h1 {
@@ -27,15 +28,34 @@ body {
 
 #header .acoes {
   margin: 5%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#header .acoes  > * {
+  width: 45%;
+}
+
+@media only screen and (max-width: 566px) {
+  #header .acoes {
+    display: block;
+  }
+  
+  #header .acoes  > * {
+    margin: 5% 0;
+    width: 100%;
+  }
 }
 
 #header .acoes p {
+  margin: 0 !important;
   padding: 5px;
   border: 1px solid rgba(255,255,255,.5);
   border-radius: 5px;
 }
 
-#header span {
+#header span#movimentos {
   color: rgba(255,255,255,.5);
 }
 
@@ -96,7 +116,7 @@ body {
 }
 
 .col-6 .back {
-  background-color: #feca57;
+  background-color: #0abde3;
 }
 
 .col-6 .front {
@@ -120,7 +140,7 @@ body {
   background-color: #ff6b6b !important;
 }
 
-/* Resultado */
+/* Resultado - Aviso */
 
 #resultado, #aviso {
   display: none;
@@ -140,4 +160,9 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
+}
+
+#estrelas-resultado {
+  font-size: 3rem;
+  color: #feca57;
 }

@@ -1,8 +1,0 @@
-{
-  "name": "matching-game",
-  "version": "1.0.0",
-  "description": "",
-  "main": "js/app.js",
-  "author": "Darlan Caruso <devcaruso@gmail.com> (http://darlancaruso.com.br/)",
-  "license": "MIT"
-}

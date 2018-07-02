@@ -1,14 +1,15 @@
 //Contador
-
 var contador = document.querySelector('#movimentos');
 var resultado = 0;
 
-//Container
+//Estrelas
+var estrelas = document.querySelector('#estrelas');
+var resultadoEstrelas = document.querySelector('#estrelas-resultado');
 
+//Container
 var container = document.querySelector('#cartas');
 
 //Lista de cartas
-
 var vetorCartas = [
     { id: 0, icone: "fa-angular" },
     { id: 1, icone: "fa-codepen" },
@@ -21,15 +22,12 @@ var vetorCartas = [
 ];
 
 //Duplica as cartas
-
 var cartas = vetorCartas.concat(vetorCartas);
 
 //Retorna o vetor em posições aleatórias
-
 cartas = retornarCartas(cartas);
 
 //Verifica se a carta selecionada é a mesma ou não
-
 function matchingGame(colunas) {
     var cartaEscolhida = [];
     colunas.forEach(coluna => {
@@ -37,8 +35,9 @@ function matchingGame(colunas) {
             var id = coluna.className[coluna.className.length - 1];
             var posicaoColuna = coluna.id;
             cartaEscolhida.push({id: id, posicao: posicaoColuna});
-            adicionarContador();
+            document.querySelector(`#${cartaEscolhida[0].posicao.toString()} .flip-container`).classList.add('hover');
             if (cartaEscolhida.length > 1) {
+                adicionarContador();
                 if (cartaEscolhida[0].id === cartaEscolhida[1].id && cartaEscolhida[0].posicao !== cartaEscolhida[1].posicao) {
                     toggleClass(cartaEscolhida, true);
                     resultado++;
@@ -47,18 +46,19 @@ function matchingGame(colunas) {
                         document.querySelector('body').setAttribute('style', 'overflow-y: hidden');
                         document.querySelector('#resultado').setAttribute('style', 'display: block');
                         document.querySelector('#movimentos-resultado').innerHTML = contador.innerHTML;
+                        atualizarEstrelas(resultadoEstrelas);
                     }
                 } else {
                     toggleClass(cartaEscolhida, false);
                 };
                 cartaEscolhida = [];
+                atualizarEstrelas(estrelas);
             };
         });
     });
 };
 
 //Adicona a classe referente ao acerto ou erro
-
 function toggleClass(vetorEscolhido, acerto) {
     if(acerto) {
         document.querySelector(`#${vetorEscolhido[0].posicao.toString()} .flip-container`).classList.add('hover');
@@ -83,12 +83,19 @@ function toggleClass(vetorEscolhido, acerto) {
     }
 }
 
-//Cria os elementos do DOM
+//Verifica se o elemento já possui filhos
+function possuiFilhos(el) {
+    while (el.hasChildNodes()) {
+        el.removeChild(el.firstChild);
+    }
+};
 
+//Cria os elementos do DOM
 function renderizarElementos() {
-    while (container.hasChildNodes()) {
-        container.removeChild(container.firstChild);
-    };
+    //Limpa elementos filhos do DOM antes de incluir novamente
+    possuiFilhos(estrelas);
+    possuiFilhos(resultadoEstrelas);
+    possuiFilhos(container);
 
     for (var i = 0; i < 4; i++) {
         var row = document.createElement('div');
@@ -96,11 +103,7 @@ function renderizarElementos() {
         row.id = 'row-'+i;
         for (var j = 0; j < 4; j++) {
             var col = document.createElement('div');
-            col.classList.add('col-6');
-            col.classList.add('col-sm-6');
-            col.classList.add('col-md-3');
-            col.classList.add('col-lg-3');
-            col.classList.add('col-xs-3');
+            col.classList.add('col-6','col-sm-6','col-md-3','col-lg-3','col-xs-3');
             row.appendChild(col);
         };
         container.appendChild(row);
@@ -119,8 +122,7 @@ function renderizarElementos() {
         flipper.classList.add('flipper');
         front.classList.add('front');
         back.classList.add('back');
-        icone.classList.add('fab');
-        icone.classList.add(`${cartas[i].icone.toString()}`);
+        icone.classList.add('fab',`${cartas[i].icone.toString()}`);
         colunas[i].classList.add('coluna-' + cartas[i].id);
         colunas[i].id = 'col-' + i;
                 
@@ -131,18 +133,56 @@ function renderizarElementos() {
         colunas[i].appendChild(flipperContainer);
     };
 
+    for(i = 0; i < 3; i ++) {
+        renderizaEstrelasCheias(estrelas);
+        renderizaEstrelasCheias(resultadoEstrelas);
+    }
+
     matchingGame(colunas);
 };
 
 //Adiciona o contador
-
 function adicionarContador() {
     contador.innerHTML++;
 };
 
-//Reinicia o jogo
+//Atualiza as estrelas de acordo com o contador 
+function atualizarEstrelas(estrelas) {
+    if (contador.innerHTML > 8) {
+        estrelas.removeChild(estrelas.childNodes[2]);
+        renderizaEstrelasVazias(estrelas);
+    }
+    if (contador.innerHTML > 15) {
+        estrelas.removeChild(estrelas.childNodes[1]);
+        var star = document.createElement('i');
+        star.classList.add('far', 'fa-star');
+        renderizaEstrelasVazias(estrelas);
+    }
+    if (contador.innerHTML > 20) {
+        estrelas.removeChild(estrelas.childNodes[0]);
+        var star = document.createElement('i');
+        star.classList.add('far', 'fa-star');
+        renderizaEstrelasVazias(estrelas);
+    };
+};
 
+//Renderiza estrela cheia
+function renderizaEstrelasCheias(estrela) {
+    star = document.createElement('i')
+    star.classList.add('fas', 'fa-star');
+    estrela.appendChild(star);
+};
+
+//Renderiza estrela vazia
+function renderizaEstrelasVazias(estrela) {
+    star = document.createElement('i')
+    star.classList.add('far', 'fa-star');
+    estrela.appendChild(star);
+};
+
+//Reinicia o jogo
 function reiniciarJogo() {
+    resultado = 0;
     contador.innerHTML = 0;
     cartas = retornarCartas(cartas);
     renderizarElementos();
@@ -151,7 +191,6 @@ function reiniciarJogo() {
 };
 
 //Retorna as cartas em posições aleatórias
-
 function retornarCartas(cartas) {
     var index = cartas.length, valorTemporario, indexAleatorio;
 
@@ -167,31 +206,34 @@ function retornarCartas(cartas) {
     return cartas;
 };
 
+//Renderiza os elementos pela primeira vez na tela
 renderizarElementos();
 
-//Protege o jogo contra trapaças
-
+//Reduz a possibilidade de trapaças no jogo
 function retornaAviso() {
     window.scrollTo(0, 0);
     document.querySelector('body').setAttribute('style', 'overflow-y: hidden');
     document.querySelector('#aviso').setAttribute('style', 'display: block');
 };
 
+//Desabilita o botão F12 e o Ctrl+Shift+I
 $(document).keydown(function (event) {
-    if (event.keyCode == 123) { // Prevent F12
+    if (event.keyCode == 123) {
         retornaAviso();
         return false;
-    } else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) { // Prevent Ctrl+Shift+I        
+    } else if (event.ctrlKey && event.shiftKey && event.keyCode == 73) {       
         retornaAviso();
         return false;
     }
 });
 
+//Desabilita o botão direito do mouse
 $(document).on("contextmenu", function (e) {
     e.preventDefault();
     retornaAviso();
 });
 
+//Retorna ao jogo
 function fecharAviso() {
     document.querySelector('body').setAttribute('style', 'overflow-y: scrol');
     document.querySelector('#aviso').setAttribute('style', 'display: none');

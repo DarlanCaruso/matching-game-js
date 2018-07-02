@@ -16,7 +16,9 @@
     <h1>Matching Game</h1>
     <h6>Jogo da Memória</h6>
     <section class="acoes">
-      <p><strong>Movimentos:</strong>
+      <p>
+        <span id="estrelas"></span>
+        <strong>Movimentos:</strong>
         <span id="movimentos">0</span>
       </p>
       <button type="button" class="btn btn-outline-info btn-small btn-block" onclick="reiniciarJogo()">Reiniciar
@@ -29,13 +31,14 @@
   </section>
   <section id="resultado">
     <div class="resultado">
-      <h1>Parabéns, você venceu o jogo!</h1>
+      <h1>Parabéns, você completou o jogo!</h1>
+      <span id="estrelas-resultado"></span>
       <p><strong>Quantidade de movimentos:</strong>
         <span id="movimentos-resultado">
           <!-- Criado dinamicamente -->
         </span>
       </p>
-      <button type="button" class="btn btn-success btn-small btn-block" onclick="reiniciarJogo()">Começar novamente
+      <button type="button" class="btn btn-success btn-small" onclick="reiniciarJogo()">Começar novamente
         <i class="fas fa-redo-alt"></i>
       </button>
     </div>
