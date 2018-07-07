@@ -5,20 +5,22 @@ var resultado = 0;
 //Estrelas
 var estrelas = document.querySelector('#estrelas');
 var resultadoEstrelas = document.querySelector('#estrelas-resultado');
+var tempo = document.querySelector('#tempo');
+var tempoResultado = document.querySelector('#tempo-resultado');
 
 //Container
 var container = document.querySelector('#cartas');
 
 //Lista de cartas
 var vetorCartas = [
-    { id: 0, icone: "fa-angular" },
-    { id: 1, icone: "fa-codepen" },
-    { id: 2, icone: "fa-react" },
-    { id: 3, icone: "fa-free-code-camp" },
-    { id: 4, icone: "fa-vuejs" },
-    { id: 5, icone: "fa-css3" },
-    { id: 6, icone: "fa-ember" },
-    { id: 7, icone: "fa-linode" },
+    { id: 0, icone: 'fa-angular' },
+    { id: 1, icone: 'fa-codepen' },
+    { id: 2, icone: 'fa-react' },
+    { id: 3, icone: 'fa-free-code-camp' },
+    { id: 4, icone: 'fa-vuejs' },
+    { id: 5, icone: 'fa-css3' },
+    { id: 6, icone: 'fa-ember' },
+    { id: 7, icone: 'fa-linode' },
 ];
 
 //Duplica as cartas
@@ -32,17 +34,19 @@ function matchingGame(colunas) {
     var cartaEscolhida = [];
     colunas.forEach(coluna => {
         coluna.querySelector('.front').addEventListener('click', () => {
+            if(!timer) calculaTempo();
             var id = coluna.className[coluna.className.length - 1];
             var posicaoColuna = coluna.id;
-            cartaEscolhida.push({id: id, posicao: posicaoColuna});
+            cartaEscolhida.push({ id: id, posicao: posicaoColuna });
             document.querySelector(`#${cartaEscolhida[0].posicao.toString()} .flip-container`).classList.add('hover');
             if (cartaEscolhida.length > 1) {
                 adicionarContador();
                 if (cartaEscolhida[0].id === cartaEscolhida[1].id && cartaEscolhida[0].posicao !== cartaEscolhida[1].posicao) {
                     toggleClass(cartaEscolhida, true);
                     resultado++;
-                    if(resultado === 8) {
-                        window.scrollTo(0,0);
+                    if (resultado === 8) {
+                        tempoResultado.innerHTML = tempo.innerHTML;
+                        window.scrollTo(0, 0);
                         document.querySelector('body').setAttribute('style', 'overflow-y: hidden');
                         document.querySelector('#resultado').setAttribute('style', 'display: block');
                         document.querySelector('#movimentos-resultado').innerHTML = contador.innerHTML;
@@ -182,6 +186,7 @@ function renderizaEstrelasVazias(estrela) {
 
 //Reinicia o jogo
 function reiniciarJogo() {
+    limpaTimer();
     resultado = 0;
     contador.innerHTML = 0;
     cartas = retornarCartas(cartas);
@@ -206,6 +211,31 @@ function retornarCartas(cartas) {
     return cartas;
 };
 
+//Calcula o tempo do jogador
+var timer = null;
+
+function calculaTempo() {
+    if (tempo.innerHTML === "0:00") {
+        let tempoInicial = new Date().getTime();
+        timer = window.setInterval(() => {
+            let atual = new Date().getTime();
+            let registrado = atual - tempoInicial;
+            let minutos = Math.floor((registrado % (1000 * 60 * 60)) / (1000 * 60));
+            let segundos = Math.floor((registrado % (1000 * 60)) / 1000);
+            if(segundos < 10) segundos = "0" + segundos;
+            let tempoAtual = `${minutos}:${segundos}`;
+            return tempo.innerHTML = tempoAtual;
+        }, 1000);
+    };
+};
+
+function limpaTimer() {
+    tempo.innerHTML = "0:00";
+    tempoResultado.innerHTML = "0:00";
+    window.clearInterval(timer);
+    timer = null;
+};
+
 //Renderiza os elementos pela primeira vez na tela
 renderizarElementos();
 
@@ -228,7 +258,7 @@ $(document).keydown(function (event) {
 });
 
 //Desabilita o botão direito do mouse
-$(document).on("contextmenu", function (e) {
+$(document).on('contextmenu', function (e) {
     e.preventDefault();
     retornaAviso();
 });

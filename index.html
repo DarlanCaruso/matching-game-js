@@ -16,14 +16,19 @@
     <h1>Matching Game</h1>
     <h6>Jogo da Memória</h6>
     <section class="acoes">
-      <p>
-        <span id="estrelas"></span>
-        <strong>Movimentos:</strong>
-        <span id="movimentos">0</span>
-      </p>
-      <button type="button" class="btn btn-outline-info btn-small btn-block" onclick="reiniciarJogo()">Reiniciar
+      <button type="button" class="btn btn-info" onclick="reiniciarJogo()">Reiniciar
         <i class="fas fa-redo-alt"></i>
       </button>
+      <div class="btn-group btn-block" role="group" aria-label="acoes">
+        <button type="button" class="btn btn-primary btn-movimentos">
+          <span id="estrelas"></span>
+          Movimentos: <span class="badge badge-light" id="movimentos">0</span>
+        </button>
+        <button type="button" class="btn btn-light">
+          <strong>Tempo: </strong>
+          <span id="tempo">0:00</span>
+        </button>
+      </div>
     </section>
   </header>
   <section id="cartas" class="container">
@@ -33,12 +38,18 @@
     <div class="resultado">
       <h1>Parabéns, você completou o jogo!</h1>
       <span id="estrelas-resultado"></span>
-      <p><strong>Quantidade de movimentos:</strong>
+      <p>
+        <strong>Você levou: </strong>
+        <span id="tempo-resultado">0:00</span> 
+        para concluir o jogo.
+      </p> 
+      <p>
+        <strong>Quantidade de movimentos:</strong>
         <span id="movimentos-resultado">
           <!-- Criado dinamicamente -->
         </span>
       </p>
-      <button type="button" class="btn btn-success btn-small" onclick="reiniciarJogo()">Começar novamente
+      <button type="button" class="btn btn-success btn-sm" onclick="reiniciarJogo()">Começar novamente
         <i class="fas fa-redo-alt"></i>
       </button>
     </div>
@@ -47,7 +58,7 @@
     <div class="avisos">
       <h1>Aviso</h1>
       <p>Para sua maior diversão, não é permitido acessar o código fonte deste game.</p>
-      <button type="button" class="btn btn-primary btn-small btn-block" onclick="fecharAviso()">Ok, compreendo.</button>
+      <button type="button" class="btn btn-primary btn-sm btn-block" onclick="fecharAviso()">Ok, compreendo.</button>
     </div>
   </section>
 </body>

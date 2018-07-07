@@ -27,7 +27,7 @@ body {
 }
 
 #header .acoes {
-  margin: 5%;
+  margin: 2%;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -37,15 +37,18 @@ body {
   width: 45%;
 }
 
-@media only screen and (max-width: 566px) {
+@media only screen and (max-width: 768px) {
   #header .acoes {
     display: block;
   }
-  
-  #header .acoes  > * {
-    margin: 5% 0;
+  #header .acoes > * {
+    margin: 1% 0;
     width: 100%;
   }
+}
+
+#header .acoes .btn-movimentos {
+   width: 100%;
 }
 
 #header .acoes p {
@@ -53,10 +56,6 @@ body {
   padding: 5px;
   border: 1px solid rgba(255,255,255,.5);
   border-radius: 5px;
-}
-
-#header span#movimentos {
-  color: rgba(255,255,255,.5);
 }
 
 /* Cartas */
@@ -85,7 +84,7 @@ body {
 .back {
   width: 100%;
   height: 130px;
-  border-radius: 2px;
+  border-radius: 5px;
   margin-bottom: 15px;
 }
 
@@ -160,6 +159,12 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%,-50%);
+}
+
+#resultado .tempo {
+  font-weight: 600;
+  font-size: 2rem;
+  display: block;
 }
 
 #estrelas-resultado {
