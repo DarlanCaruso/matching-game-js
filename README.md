@@ -1,10 +1,14 @@
 # Matching Game
 
-Jogo da memória desenvolvido em JavaScript para o curso de Fundamentos de Web Front-end da plataforma de ensino online Udacity.
+> Jogo da memória desenvolvido em JavaScript para o curso de Fundamentos de Web Front-end da plataforma de ensino online Udacity.
+
+![alt text](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+
+[Demo](https://darlancaruso.github.io/matching-game-js/)
 
 ## Executando
 
-É necessário apenas baixar o arquivos e abrir a página `index.html`
+É necessário apenas baixar o arquivos e abrir a página `index.html` ou acesse o [demo](https://darlancaruso.github.io/matching-game-js/)
 
 ## Regras do jogo
 
@@ -14,7 +18,7 @@ O tabuleiro do jogo consiste em dezesseis cartas dispostas aleatoriamente em uma
 - Então, esse mesmo jogador deve virar outra carta, tentando encontrar a carta correspondente.
 - Se as cartas forem iguais, ambas ficam viradas para cima
 - Se as cartas não forem iguais, ambas devem ser viradas para baixo novamente
-O jogo termina quando todos os pares forem encontrados.
+  O jogo termina quando todos os pares forem encontrados.
 
 ## Skills
 
