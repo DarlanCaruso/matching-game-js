@@ -2,7 +2,7 @@
 
 > Jogo da memória desenvolvido em JavaScript para o curso de Fundamentos de Web Front-end da plataforma de ensino online Udacity.
 
-![alt text](https://raw.githubusercontent.com/username/projectname/branch/path/to/img.png)
+![alt text](https://raw.githubusercontent.com/DarlanCaruso/matching-game-js/master/screenshot.png)
 
 [Demo](https://darlancaruso.github.io/matching-game-js/)
 
